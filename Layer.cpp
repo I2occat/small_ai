@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-void Layer::init(int inputs, int outputs) {
+Layer::Layer(int inputs, int outputs) {
 	c_in = inputs;
 	c_out = outputs;
 	neurons = new Perzeptron*[c_out];
@@ -21,15 +21,16 @@ float* Layer::train(float* zf, float dv, float* prev_weights) {
 }
 
 float* Layer::eval(float* input) {
-	float* res = new float(c_out);
+	float* res = new float[c_out];
 	for (int i = 0; i < c_out; i++) {
-		res[i]=neurons[i]->eval(input);
+		res[i] = neurons[i]->eval(input);
 	}
 	return res;
 }
 
 float* Layer::get_last_eval() {
-	float* res = new float(c_out);
+	std::cout << c_out;
+	float* res = new float[c_out];
 	for (int i = 0; i < c_out; i++) {
 		res[i] = neurons[i]->get_last_eval();
 	}

@@ -22,22 +22,21 @@ void print_matrix(float** a, int n, int m) {
 int main()
 {
 	// init
-	float** zf = new float* [4]; // Zielfunktion
+	float** zf = new float*[4]; // Zielfunktion
 	float* v = new float[4];		// Values
 	for (int i = 0; i < 4; i++) {
 		zf[i] = new float[2];
 		zf[i][0] = (float)(i > 1 ? 1 : 0);
 		zf[i][1] = (float)(i % 2 == 1 ? 1 : 0);
 	}
-	v[0] = 1;
+	v[0] = 0;
 	v[1] = 0;
-	v[2] = 0;
+	v[2] = 1;
 	v[3] = 0;
 
-	Layer* layer = new Layer();
-	Layer* layer_out = new Layer();
-	layer->init(2,2);
-	layer_out->init(2,1);
+	Layer* layer = new Layer(2,2);
+	Layer* layer_out = new Layer(2,1);
+	
 	float* prev_weights = new float[3];
 	for (int i = 0; i < 3; i++) {
 		prev_weights[i] = 2;
@@ -46,9 +45,10 @@ int main()
 		for (int i = 0; i < 4; i++) {
 			// evaluate current state
 			float result = layer_out->eval(layer->eval(zf[i]))[0];
-
+			std::cout << "z: " << v[i]-result << std::endl;
 			prev_weights = layer_out->train(layer->get_last_eval(), v[i] - result, prev_weights);
 			layer->train(zf[i], v[i] - result, prev_weights);
+			 i = 4; j = 40;
 		}
 	}
 	std::cout << "zf: \n";

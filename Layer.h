@@ -4,7 +4,7 @@
 class Layer
 {
 	public:
-		void init(int inputs, int outputs);
+		Layer(int inputs, int outputs);
 		float* train(float* zf, float dv, float* prev_weights);
 		float* eval(float* input);
 		float* get_last_eval();
