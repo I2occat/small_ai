@@ -29,7 +29,6 @@ float* Layer::eval(float* input) {
 }
 
 float* Layer::get_last_eval() {
-	std::cout << c_out;
 	float* res = new float[c_out];
 	for (int i = 0; i < c_out; i++) {
 		res[i] = neurons[i]->get_last_eval();
@@ -43,6 +42,12 @@ void Layer::calc_weights() {
 		for (int j = 0; j < c_out; j++) {
 			weights[i] += neurons[j]->get_last_eval_index(i);
 		}
-		weights[i] /= c_out;
+		weights[i] /= (float)c_out;
+	}
+}
+
+void Layer::set_weights(float** weights) {
+	for (int i = 0; i < c_out; i++) {
+		neurons[i]->set_weights(weights[i]);
 	}
 }

@@ -8,6 +8,7 @@ class Layer
 		float* train(float* zf, float dv, float* prev_weights);
 		float* eval(float* input);
 		float* get_last_eval();
+		void set_weights(float** weights);
 	private:
 		void calc_weights();
 		int c_in;

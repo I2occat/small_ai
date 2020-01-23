@@ -34,21 +34,21 @@ int main()
 	v[2] = 1;
 	v[3] = 0;
 
-	Layer* layer = new Layer(2,2);
-	Layer* layer_out = new Layer(2,1);
+	Layer* layer = new Layer(2,80);
+	Layer* layer_out = new Layer(80,1);
 	
 	float* prev_weights = new float[3];
 	for (int i = 0; i < 3; i++) {
 		prev_weights[i] = 2;
 	}
-	for (int j = 0; j < 40; j++) {
+	for (int j = 0; j < 1000; j++) {
 		for (int i = 0; i < 4; i++) {
 			// evaluate current state
 			float result = layer_out->eval(layer->eval(zf[i]))[0];
-			std::cout << "z: " << v[i]-result << std::endl;
+			if (j == 0)std::cout<<i<<": " << layer->eval(zf[i])[0] << layer->eval(zf[i])[1] << std::endl;
 			prev_weights = layer_out->train(layer->get_last_eval(), v[i] - result, prev_weights);
+
 			layer->train(zf[i], v[i] - result, prev_weights);
-			 i = 4; j = 40;
 		}
 	}
 	std::cout << "zf: \n";
